@@ -3,6 +3,7 @@ import {
   HunterProvider,
   ApolloProvider,
   SerpApiLLMProvider,
+  SpecStreamLLMProvider,
   AnymailFinderProvider,
   ProxycurlProvider,
 } from '../providers/index.js';
@@ -19,6 +20,13 @@ export function buildProviders(creds: ProviderCredentials): Provider[] {
       creds.serpapi.llmApiKey
     ));
   }
+  if (creds.specstream?.apiKey && creds.specstream.llmApiKey) {
+    providers.push(new SpecStreamLLMProvider(
+      creds.specstream.apiKey,
+      creds.specstream.llmProvider ?? 'groq',
+      creds.specstream.llmApiKey
+    ));
+  }
   if (creds.proxycurl?.apiKey) providers.push(new ProxycurlProvider(creds.proxycurl.apiKey));
   return providers;
 }
@@ -28,16 +36,23 @@ export function credentialsFromEnv(env: NodeJS.ProcessEnv = process.env): Provid
   if (env.HUNTER_API_KEY) creds.hunter = { apiKey: env.HUNTER_API_KEY };
   if (env.APOLLO_API_KEY) creds.apollo = { apiKey: env.APOLLO_API_KEY };
   if (env.SERPAPI_API_KEY) {
-    creds.serpapi = {
-      apiKey: env.SERPAPI_API_KEY,
-      llmProvider: (env.LLM_PROVIDER as 'groq' | 'openai' | 'anthropic') ?? 'groq',
-      llmApiKey:
-        env.LLM_PROVIDER === 'openai' ? env.OPENAI_API_KEY :
-        env.LLM_PROVIDER === 'anthropic' ? env.ANTHROPIC_API_KEY :
-        (env.GROQ_API_KEY ?? env.OPENAI_API_KEY ?? env.ANTHROPIC_API_KEY),
-    };
+    creds.serpapi = { apiKey: env.SERPAPI_API_KEY, ...llmFromEnv(env) };
+  }
+  if (env.SPECSTREAM_API_KEY) {
+    creds.specstream = { apiKey: env.SPECSTREAM_API_KEY, ...llmFromEnv(env) };
   }
   if (env.ANYMAILFINDER_API_KEY) creds.anymailfinder = { apiKey: env.ANYMAILFINDER_API_KEY };
   if (env.PROXYCURL_API_KEY) creds.proxycurl = { apiKey: env.PROXYCURL_API_KEY };
   return creds;
+}
+
+// LLM settings shared by the search + LLM providers (SerpAPI, SpecStream).
+function llmFromEnv(env: NodeJS.ProcessEnv): { llmProvider: 'groq' | 'openai' | 'anthropic'; llmApiKey?: string } {
+  return {
+    llmProvider: (env.LLM_PROVIDER as 'groq' | 'openai' | 'anthropic') ?? 'groq',
+    llmApiKey:
+      env.LLM_PROVIDER === 'openai' ? env.OPENAI_API_KEY :
+      env.LLM_PROVIDER === 'anthropic' ? env.ANTHROPIC_API_KEY :
+      (env.GROQ_API_KEY ?? env.OPENAI_API_KEY ?? env.ANTHROPIC_API_KEY),
+  };
 }

@@ -44,7 +44,7 @@ program
         spinner.fail('No providers configured.');
         console.error(chalk.yellow('\nSet at least one of these env vars:'));
         console.error('  HUNTER_API_KEY, APOLLO_API_KEY, SERPAPI_API_KEY + GROQ_API_KEY,');
-        console.error('  ANYMAILFINDER_API_KEY, PROXYCURL_API_KEY');
+        console.error('  SPECSTREAM_API_KEY + GROQ_API_KEY, ANYMAILFINDER_API_KEY, PROXYCURL_API_KEY');
         console.error('\nSee README for how to obtain free-tier API keys.');
         process.exit(2);
       }

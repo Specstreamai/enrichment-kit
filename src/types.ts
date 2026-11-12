@@ -73,6 +73,7 @@ export interface ProviderCredentials {
   hunter?: { apiKey: string };
   apollo?: { apiKey: string };
   serpapi?: { apiKey: string; llmProvider?: 'groq' | 'openai' | 'anthropic'; llmApiKey?: string };
+  specstream?: { apiKey: string; llmProvider?: 'groq' | 'openai' | 'anthropic'; llmApiKey?: string };
   anymailfinder?: { apiKey: string };
   clearbit?: { apiKey: string };
   proxycurl?: { apiKey: string };

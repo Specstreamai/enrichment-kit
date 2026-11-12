@@ -61,7 +61,7 @@ For a 10k-lead list, typical cost lands near **$60 instead of $300**. That's the
 
 ## What it does
 
-- ✅ **5 providers out of the box** — Hunter, Apollo, Anymailfinder, SerpAPI + LLM, Proxycurl
+- ✅ **6 providers out of the box** — Hunter, Apollo, Anymailfinder, SerpAPI + LLM, SpecStream + LLM, Proxycurl
 - ✅ **Bring your own keys** — no resale markup, pay providers direct
 - ✅ **Auto-ordered waterfall** — effective cost routing, no config needed
 - ✅ **Built-in cache** — file or memory, 30-day TTL by default, enrichments are ~40% cheaper after week 1
@@ -96,7 +96,8 @@ You need **at least one** of these. More = better waterfall coverage. All have f
 | **Hunter** | 25 searches/month | [hunter.io/sign-up](https://hunter.io/users/sign_up) |
 | **Apollo** | 10k credits + 120 email credits/year on free plan | [apollo.io/signup](https://www.apollo.io/sign-up) |
 | **SerpAPI** | 100 searches/month | [serpapi.com/users/sign_up](https://serpapi.com/users/sign_up) |
-| **Groq** (LLM for SerpAPI extract) | Generous free tier, fastest | [console.groq.com](https://console.groq.com/keys) |
+| **SpecStream** (search step, alternative to SerpAPI) | $10 of credit, no card (searches are $5 per 1,000) | [specstream.ai/docs/search-api](https://specstream.ai/docs/search-api) |
+| **Groq** (LLM for SerpAPI/SpecStream extract) | Generous free tier, fastest | [console.groq.com](https://console.groq.com/keys) |
 | **Anymailfinder** | Free trial credits | [anymailfinder.com](https://anymailfinder.com/pricing) |
 | **Proxycurl** | 10 free credits | [nubela.co/proxycurl](https://nubela.co/proxycurl) |
 
@@ -107,6 +108,7 @@ export HUNTER_API_KEY=...
 export APOLLO_API_KEY=...
 export SERPAPI_API_KEY=...
 export GROQ_API_KEY=...          # or OPENAI_API_KEY or ANTHROPIC_API_KEY
+export SPECSTREAM_API_KEY=...    # optional, search step like SerpAPI, uses the same LLM key
 export ANYMAILFINDER_API_KEY=... # optional
 export PROXYCURL_API_KEY=...     # optional
 ```
